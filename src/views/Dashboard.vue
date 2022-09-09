@@ -16,6 +16,7 @@
               </div>
               <div>
                   <p>{{profile.value +' MWh'}}</p>
+                  <hr />
               </div>
             </div>
       </div>
@@ -56,37 +57,36 @@ export default {
         pointRadius: 0,
       };
     },
-    getAverage(data){
+    getAverage(i, days) {
       let sum = 0;
-        data.forEach(value => {
-          sum += value;
-        });
-        return sum / data.length
-      }
+      days.forEach(day => {
+        sum += day.values[i];
+      });
+      return sum / days[i].values.length;
+    }
   },
 
   mounted(){
+    let i = 0;
     let lineChartData = [];
     let dataAverage = [];
     const ctx = document.getElementById('myChart');
+
+    // ## Missing Time Format For X-Axis label
     const labels = this.sampleData.chunked_time_series.x_axis;
 
     lineChartData["datasets"] = []
 
-    this.days.forEach(day => {
-      day.values.forEach(value => {
-        
-      })
-      dataAverage.push(this.getAverage(day.values));
-    });
-    lineChartData.push(this.getDataset(dataAverage, 'rgb(16,45,76)'));
+    for(i = 0; i < this.days[0].values.length; i++){
+      dataAverage.push(this.getAverage(i, this.days)/8);
+    }
+
+    // ## This shows a pretty high average and still needs fixing but the trend is similar to example
+    // lineChartData.push(this.getDataset(dataAverage, 'rgb(16,45,76)'));
 
     this.days.forEach(day => {
       lineChartData.push(this.getDataset(day.values, 'rgb(198,198,198)'));
     });
-
-
-    console.log(lineChartData);
 
     const data = {
       labels: labels,
@@ -148,18 +148,19 @@ myChart;
   font-size: 14px;
   font-weight: bold;
   color: #2B3E52;
-  padding-left: 20px;
+  padding: 0px 20px 0px 20px;
 }
 
 .profileList h6 {
   font-size: 10px;
   font-weight: bold;
   color: #2B3E52;
-  padding-left: 20px;
+  padding: 0px 20px 0px 20px;
+
 }
 
 hr {
-  color: #fff
+  border-top: 2px solid white;
 }
 
 .profileList p {
