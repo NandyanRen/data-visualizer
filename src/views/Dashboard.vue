@@ -62,7 +62,7 @@ export default {
       days.forEach(day => {
         sum += day.values[i];
       });
-      return sum / days[i].values.length;
+      return sum / days.length;
     }
   },
 
@@ -78,11 +78,10 @@ export default {
     lineChartData["datasets"] = []
 
     for(i = 0; i < this.days[0].values.length; i++){
-      dataAverage.push(this.getAverage(i, this.days)/8);
+      dataAverage.push(this.getAverage(i, this.days));
     }
 
-    // ## This shows a pretty high average and still needs fixing but the trend is similar to example
-    // lineChartData.push(this.getDataset(dataAverage, 'rgb(16,45,76)'));
+    lineChartData.push(this.getDataset(dataAverage, 'rgb(16,45,76)'));
 
     this.days.forEach(day => {
       lineChartData.push(this.getDataset(day.values, 'rgb(198,198,198)'));
