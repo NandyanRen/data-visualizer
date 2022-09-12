@@ -10,7 +10,7 @@
         <hr />
         <div class="profile"
           v-for="profile in profiles" @click="loadProfile(profile)"
-          :key="profile" :name="profile.name">
+          :key="profile">
                   <h2>{{profile.name}}</h2>
                   <p>{{profile.value +' MWh'}}</p>
                   <hr />
@@ -24,14 +24,6 @@
             <h3>kW</h3>
           </div>
         </div>
-        <!-- <h2>{{ season }}</h2>
-        <select v-model="season">
-          <option value="" selected>Show all seasons</option>
-          <option value="su">Summer</option>
-          <option value="au">Autumn</option>
-          <option value="wi">Winter</option>
-          <option value="sp">Spring</option>
-        </select> -->
         <ChartSection />
       </div>
       
@@ -49,7 +41,6 @@ export default {
   data(){
     return {
       profiles,
-      season: "",
       profileName: "No profile selected",
     }
   },
