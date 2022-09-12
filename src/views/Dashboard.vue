@@ -8,20 +8,30 @@
       <div class="profileList">
         <h6>Name</h6>
         <hr />
-        <div
-          v-for="profile in profiles"
-          :key="profile">
+        <div class="profile"
+          v-for="profile in profiles" @click="loadProfile(profile)"
+          :key="profile" :name="profile.name">
                   <h2>{{profile.name}}</h2>
                   <p>{{profile.value +' MWh'}}</p>
                   <hr />
-            </div>
+      </div>
       </div>
       <div class="rightSection">
         <div class="rightSectionHeader">
-          <h1>Section Label</h1>
-          <p>Load, daily view</p>
-          <h3>kW</h3>
+          <div class="sectionLabel">
+            <h1>{{ profileName }}</h1>
+            <p>Load, daily view</p>
+            <h3>kW</h3>
+          </div>
         </div>
+        <!-- <h2>{{ season }}</h2>
+        <select v-model="season">
+          <option value="" selected>Show all seasons</option>
+          <option value="su">Summer</option>
+          <option value="au">Autumn</option>
+          <option value="wi">Winter</option>
+          <option value="sp">Spring</option>
+        </select> -->
         <ChartSection />
       </div>
       
@@ -39,12 +49,21 @@ export default {
   data(){
     return {
       profiles,
+      season: "",
+      profileName: "No profile selected",
     }
   },
 
   components: {
     ChartSection,
   },
+
+  methods: {
+      loadProfile(profile) {
+      this.profileName = profile.name;
+    },
+  },
+  
 }
 </script>
 
@@ -98,6 +117,10 @@ hr {
   color: #2B3E52;
   padding-left: 20px;
 
+}
+
+.profile {
+  cursor: pointer;
 }
 
 .rightSection{
